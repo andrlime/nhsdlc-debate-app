@@ -1,0 +1,21 @@
+version: '3'
+
+tasks:
+  run-dev:
+    cmds:
+      - yarn dev
+  build-dev:
+    cmds:
+      - docker build -t andrewli2048/rabbit-frontend -f docker/DevDockerfile .
+  run-dev:
+    cmds:
+      - task: build-dev
+      - docker run --rm -p 8080:8080 --name rabbit-frontend andrewli2048/rabbit-frontend
+  build-prod:
+    cmds:
+      - docker build -t andrewli2048/rabbit-frontend -f docker/ProdDockerfile .
+      - docker push andrewli2048/rabbit-frontend
+  run-prod:
+    cmds:
+      - task: build-prod
+      - docker run --rm -p 8080:8080 --name rabbit-frontend-prod andrewli2048/rabbit-frontend

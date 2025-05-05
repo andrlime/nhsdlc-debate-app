@@ -1,0 +1,21 @@
+FROM python:3.12.4-bookworm AS base
+
+# Install poetry and dependencies
+FROM base AS deps
+
+RUN pip install poetry
+
+WORKDIR /app
+
+COPY config.yaml pyproject.toml poetry.lock* ./
+RUN poetry install --without dev
+
+# Run the actual Flask app using waitress
+FROM deps AS flask
+WORKDIR /app
+
+COPY --from=deps /app/. .
+COPY . .
+
+EXPOSE 9000:9000
+CMD ["poetry", "run", "waitress-serve", "--port=9000", "--call", "rabbit.core.flask.factory:create_flask_app"]

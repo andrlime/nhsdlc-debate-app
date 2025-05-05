@@ -1,0 +1,38 @@
+services:
+  frontend:
+    image: andrewli2048/rabbit-frontend
+    build:
+      context: frontend
+      dockerfile: docker/DevDockerfile
+      # dockerfile: docker/ProdDockerfile
+    develop:
+      watch:
+        - action: sync
+          path: frontend/src
+          target: /app/src
+        - action: sync
+          path: frontend/public
+          target: /app/public
+        - action: rebuild
+          path: frontend/package.json
+    ports:
+      - "8080:8080"
+    stop_signal: SIGINT
+    restart: always
+  backend:
+    image: andrewli2048/rabbit-backend
+    build:
+      context: backend
+      dockerfile: docker/DevDockerfile
+      # dockerfile: docker/ProdDockerfile
+    develop:
+      watch:
+        - action: sync
+          path: backend/rabbit
+          target: /app/rabbit
+        - action: rebuild
+          path: backend/pyproject.toml
+    ports:
+      - "9000:9000"
+    stop_signal: SIGTERM
+    restart: always
