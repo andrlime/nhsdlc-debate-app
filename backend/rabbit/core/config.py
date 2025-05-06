@@ -3,11 +3,10 @@ Helper functions to configure Flask app settings
 """
 
 import os
-
 from typing import Any
 
 from dotenv import load_dotenv
-from yaml import load, Loader
+from yaml import Loader, load
 
 from rabbit.core.exceptions import ConfigValueError, EnvironmentValueError
 

@@ -2,7 +2,7 @@
 Helper functions to make responses
 """
 
-from flask import jsonify, make_response, Response
+from flask import Response, jsonify, make_response
 
 
 def make_json_response(message: str, code: int) -> Response:
