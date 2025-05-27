@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
 
-export const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className={styles.page}>
       hello world
@@ -9,4 +9,3 @@ export const Home = () => {
 };
 
 export default Home;
-
